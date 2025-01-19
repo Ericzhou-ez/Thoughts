@@ -1,9 +1,9 @@
 
 
-export default function JournalEntryCover({ title, date, photoSrc }) {
-   console.log("Title: ", title); 
-   console.log("Date: ", date); 
-   console.log("Photo Source: ", photoSrc); 
+export default function JournalEntryCover({ title, date, photoSrc, handleQuickStart }) {
+   console.log("Title: ", title);
+   console.log("Date: ", date);
+   console.log("Photo Source: ", photoSrc);
 
    return (
       <div className="journal-cover">

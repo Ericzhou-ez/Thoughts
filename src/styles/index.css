@@ -118,7 +118,13 @@ button:active {
    border-radius: 40px;
    z-index: 100;
    transition: scale 0.1s ease-in-out;
-   transition: all 0.2s all;
+   transition: all 0.3s all;
+}
+
+.nav:hover {
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+   width: 82%;
+   max-width: 1020px;
 }
 
 .nav-logo {

@@ -138,7 +138,7 @@ svg {
 
 #editor.focused-editor {
    width: 70vw !important;
-   height: 60vh !important;
+   height: 70vh !important;
    position: relative;
    transform: translateY(-65vh);
 }
@@ -171,4 +171,30 @@ svg {
    /* overflow-y: scroll; */
 
    transition: all 0.2s ease-in-out;
+}
+
+#editor img {
+   width: 50%;
+   height: auto;
+   text-align: center;
+   margin: 0 auto;
+   border-radius: 25px;
+
+}
+
+.send-button {
+   background-color: #000004;
+   color: white;
+   border: none;
+   border-radius: 50%;
+   font-size: 1.2rem;
+   font-style: bold;
+   padding: 5px !important;
+
+   height: 40px;
+   width: 40px;
+
+   position: fixed;
+   bottom: 1.5vh;
+   right: 1vw;
 }

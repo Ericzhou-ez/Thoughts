@@ -9,6 +9,13 @@ import { signOut } from "firebase/auth";
 import { auth } from "./config/firebase";
 import TextInputBar from "./components/textInputBar";
 import JournalHistory from "./components/JournalHistory";
+import Journal from "./components/Journal";
+import {
+   BrowserRouter as Router,
+   Routes,
+   Route,
+   useNavigate,
+} from "react-router-dom";
 
 function App() {
    const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -60,7 +67,7 @@ function App() {
    }
 
    return (
-      <>
+      <Router>
          <Nav
             isSignInOpen={isSignInOpen}
             toggleIsSignInOpen={toggleIsSignInOpen}
@@ -71,27 +78,36 @@ function App() {
             setUser={setUser}
          />
 
-         {!signedIn ? (
-            <Hero
-               isSignInOpen={isSignInOpen}
-               toggleIsSignInOpen={toggleIsSignInOpen}
+         <Routes>
+            <Route
+               path="/"
+               element={
+                  !signedIn ? (
+                     <Hero
+                        isSignInOpen={isSignInOpen}
+                        toggleIsSignInOpen={toggleIsSignInOpen}
+                     />
+                  ) : (
+                     <>
+                        <div className="main-top-app">
+                           <JournalHistory
+                        
+                           />
+                        </div>
+                        <TextInputBar />
+                     </>
+                  )
+               }
             />
-         ) : (
-            <>
-               <div className="main-top-app">
-                  <JournalHistory />
-               </div>
-
-               <TextInputBar />
-            </>
-         )}
+            <Route path="/journal" element={<Journal />} />
+         </Routes>
 
          {isSignInOpen && !signedIn && (
             <div className="modalOverlay-light" onClick={toggleIsSignInOpen}>
                <AuthenticationPopUp />
             </div>
          )}
-      </>
+      </Router>
    );
 }
 
