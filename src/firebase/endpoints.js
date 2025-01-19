@@ -1,5 +1,6 @@
 import { getDocs, doc, addDoc, collection } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { db, storage } from "../config/firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
 async function getJournalEntry() {
   try {
@@ -15,13 +16,37 @@ async function getJournalEntry() {
 }
 
 async function createJournalEntry(collectionName, data) {
+  try {
+    const docRef = await addDoc(collection(db, collectionName), data);
+    if (data.images) {
+      data.images.forEach((image) => {
+        const storageRef = ref(storage, `images/${image.name}`);
+        uploadBytes(storageRef, image).then((snapshot) => {
+          console.log(`Uploading this file: ${image.name}`);
+        });
+      });
+    }
+    return { id: docRef.id, ...data };
+  } catch (error) {
+    console.error("Error adding document data: ", error);
+    throw error;
+  }
+}
+
+async function createImage(data) {
     try {
-        const docRef = await addDoc(collection(db, collectionName), data);
-        return { id: docRef.id, ...data };
+      if (data.images) {
+        data.images.forEach((image) => {
+          const storageRef = ref(storage, `images/${image.name}`);
+          uploadBytes(storageRef, image).then((snapshot) => {
+            console.log(`Uploading this file: ${image.name}`);
+          });
+        });
+      }
     } catch (error) {
       console.error("Error adding document data: ", error);
       throw error;
     }
   }
 
-export { getJournalEntry };
+export { getJournalEntry, createJournalEntry, createImage };
