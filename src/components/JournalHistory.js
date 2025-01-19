@@ -75,6 +75,7 @@ export default function JournalHistory() {
                <JournalEntryCover
                   key={entry.id}
                   id={entry.id}
+                  hexcode={entry.hexcode}
                   deleteBtn={true}
                   title={entry.title || "Thoughts"}
                   date={formatDate(entry.timestamp)}
