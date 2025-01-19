@@ -7,10 +7,10 @@ import JournalEntryCover from "./JournalEntryCover";
 import { useNavigate } from "react-router-dom";
 
 export default function JournalHistory({ deleteEntry }) {
-   const [entries, setEntries] = useState([]); 
+   const [entries, setEntries] = useState([]);
    const [userSignInDate, setUserSignInDate] = useState(null);
-   const { refreshKey } = useJournal(); 
-   const { refreshEntries } = useJournal(); 
+   const { refreshKey } = useJournal();
+   const { refreshEntries } = useJournal();
 
    const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ export default function JournalHistory({ deleteEntry }) {
       };
 
       fetchEntries();
-   }, [refreshKey]); 
+   }, [refreshKey]);
 
    const formatDate = (dateString) => {
       return new Date(dateString).toLocaleDateString(undefined, {
@@ -82,9 +82,9 @@ export default function JournalHistory({ deleteEntry }) {
                   onClick={() => handleEntryClick(entry.id)}
                   onDelete={async () => {
                      try {
-                        await deleteEntry(entry.id); 
+                        await deleteEntry(entry.id);
                         refreshEntries();
-                        // window.location.reload(); 
+                        // window.location.reload();
                      } catch (error) {
                         console.error("Error deleting entry:", error);
                      }
