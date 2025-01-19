@@ -1,51 +1,169 @@
-.text-input-container {
-   width: 100%;
-   max-width: 600px;
-   margin: 0 auto;
+:root {
+   --background: #eeeeee;
+   --background-secondary: #f4f4f4;
+   --font-primary: #000004;
+   --font-secondary: #07072f;
+   --highlight: #bcd3ffcb;
+   --lighter-gray-accent: #f4f4f4;
+   --light-gray-accent: #f1f1f1;
+   --dark-gray-accent: #535353;
+   --darker-gray-accent: #535353;
 }
 
-.glass {
-   backdrop-filter: blur(10px);
-   background: rgba(255, 255, 255, 0.2);
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-   transition: all 0.3s ease-in-out;
+
+
+.ql-toolbar .ql-stroke {
+   fill: none;
+   stroke: var(--font-secondary);
 }
 
-.text-input-bar {
+.ql-toolbar .ql-fill {
+   fill: var(--font-secondary);
+   stroke: none;
+}
+
+.ql-toolbar .ql-picker {
+   color: var(--font-secondary);
+}
+
+::selection {
+   background: var(--highlight);
+   color: var(--font-secondary);
+}
+::-moz-selection {
+   background: var(--highlight);
+   color: var(--font-secondary);
+}
+
+.ql-snow .ql-picker-options .ql-picker-item::before {
+   content: attr(data-value) !important;
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label::before {
+   content: attr(data-value) !important;
+}
+
+.ql-toolbar .ql-stroke {
+   fill: none;
+   stroke: var(--font-secondary);
+}
+
+.ql-toolbar .ql-fill {
+   fill: var(--font-secondary);
+   stroke: none;
+}
+
+.ql-toolbar .ql-picker {
+   color: var(--font-secondary);
+}
+
+::selection {
+   background: var(--highlight);
+   color: var(--font-secondary);
+}
+::-moz-selection {
+   background: var(--highlight);
+   color: var(--font-secondary);
+}
+
+.ql-snow .ql-picker-options .ql-picker-item::before {
+   content: attr(data-value) !important;
+}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label::before {
+   content: attr(data-value) !important;
+}
+
+#editor .ql-editor {
+   line-height: 1.7;
+}
+
+.ql-blank {
+   padding: 12px 15px;
+}
+
+.ql-toolbar {
+   border: none !important;
+   padding-left: 16px;
+   min-height: 50px;
+   height: 100%;
+   flex: 1;
    display: flex;
-   align-items: center;
-   justify-content: center;
-   padding: 10px 15px;
+   flex-direction: row;
+}
+
+.ql-snow .ql-formats button {
+   height: 30px !important;
+   margin-right: 8px !important;
+}
+
+.ql-snow .ql-picker-label::before {
+   position: absolute;
+   transform: translateY(+7%);
+   height: 30px !important;
+   display: flex !important;
+   flex-direction: column !important;
+   font-size: 1rem !important;
+   margin-right: 8px !important;
+}
+
+svg {
+   height: 20px !important;
+   margin-right: 25px !important;
+}
+
+.ql-editor h1 {
+   font-size: 2.5rem;
+   color: var(--font-primary);
+   padding-top: 25px;
+   padding-bottom: 10px;
+   padding-left: 16px;
+}
+
+.ql-editor {
+   padding: 0;
+}
+
+.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
+   display: none;
+}
+
+.editor-container.focused-editor-container {
+   width: 80vw !important;
+   height: 70vh !important;
+}
+
+#editor.focused-editor {
+   width: 70vw !important;
+   height: 60vh !important;
+}
+
+.editor-container {
+   position: fixed;
+   bottom: 3vh;
+   width: 60vw;
+   max-width: 1000px;
    border-radius: 30px;
-   cursor: pointer;
-   text-align: center;
-}
+   padding: 10px 20px;
+   left: 50%; /* Start at the center horizontally */
+   transform: translateX(-50%);
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 
-.text-input-bar p {
-   margin: 0;
-   color: #555;
-}
+   background: rgba(208, 208, 208, 0.2);
+   backdrop-filter: blur(20px);
 
-.expanded-editor {
-   padding: 20px;
-   border-radius: 15px;
-   margin-top: 20px;
+   transition: all 0.2s ease-in-out;
 }
 
 #editor {
-   min-height: 50vh;
-}
-
-.close-btn {
-   background-color: #007bff;
-   color: white;
-   padding: 10px 20px;
    border: none;
-   border-radius: 5px;
-   cursor: pointer;
-   margin-top: 20px;
-}
+   padding: 10px 16px;
+   font-size: 1.2rem;
+   color: var(--font-primary);
+   font-family: "Oxygen", Helvetica, Arial;
+   line-height: 2rem !important;
 
-.close-btn:hover {
-   background-color: #0056b3;
+   /* overflow-y: scroll; */
+
+   transition: all 0.2s ease-in-out;
 }

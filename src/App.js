@@ -77,10 +77,13 @@ function App() {
                toggleIsSignInOpen={toggleIsSignInOpen}
             />
          ) : (
-            <div className="main-app">
-               <JournalHistory />
-               {/* <TextInputBar /> */}
-            </div>
+            <>
+               <div className="main-top-app">
+                  <JournalHistory />
+               </div>
+
+               <TextInputBar />
+            </>
          )}
 
          {isSignInOpen && !signedIn && (

@@ -1,80 +1,79 @@
-// import "../styles/textBar.css"
-// import React, { useState, useLayoutEffect, useRef } from "react";
-// import Quill from "quill";
-// import "quill/dist/quill.snow.css";
+import React, { useState, useLayoutEffect, useRef } from "react";
+import Quill from "quill";
+import "../styles/textBar.css";
 
+export default function TextInput() {
+   const quillRef = useRef(null);
+   const observerRef = useRef(null);
+   const [isFocused, setIsFocused] = useState(false);
+   const isInitialized = useRef(false);
+   const [textContent, setTextContent] = useState(
+      () => JSON.parse(localStorage.getItem("textContent")) || ""
+   );
 
-// export default function TextInputBar() {
-//    const [isExpanded, setIsExpanded] = useState(false);
-//    const quillRef = useRef(null);
-//    const isInitialized = useRef(false);
-//    const [textContent, setTextContent] = useState(
-//       () => JSON.parse(localStorage.getItem("textContent")) || ""
-//    );
+   const toolbarOptions = React.useMemo(
+      () => [
+         ["bold", "italic", "underline"],
+         [{ header: 2 }, { header: 3 }],
+         [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+      ],
+      []
+   );
 
-//    const handleExpand = () => setIsExpanded(true);
-//    const handleCollapse = () => setIsExpanded(false);
+   useLayoutEffect(() => {
+      const editorElement = document.getElementById("editor");
 
-//    const toolbarOptions = [
-//       [{ font: ["oxygenmono", "oxygen", "lexend", "newsreader", "poppins"] }],
-//       ["bold", "italic", "underline"],
-//       [{ header: 2 }, { header: 3 }],
-//       [{ list: "ordered" }, { list: "bullet" }],
-//       ["image"],
-//    ];
+      if (!quillRef.current && !isInitialized.current && editorElement) {
+         const quill = new Quill("#editor", {
+            theme: "snow",
+            modules: {
+               toolbar: toolbarOptions,
+            },
+            placeholder: "Thoughts...", // Add placeholder
+         });
 
-//    const initializeQuill = () => {
-//       if (!quillRef.current && isExpanded && !isInitialized.current) {
-//          const quill = new Quill("#editor", {
-//             theme: "snow",
-//             modules: { toolbar: toolbarOptions },
-//             placeholder: "Write your thoughts here...",
-//          });
+         quillRef.current = quill;
+         isInitialized.current = true;
 
-//          quillRef.current = quill;
-//          isInitialized.current = true;
+         quill.root.innerHTML = textContent;
 
-//          quill.root.innerHTML = textContent;
+         const editorContent = document.querySelector(".ql-editor");
+         observerRef.current = new MutationObserver(() => {
+            const text = editorContent.innerText.trim();
+            setTextContent(text);
+            localStorage.setItem("textContent", JSON.stringify(text));
+         });
 
-//          const editorContent = document.querySelector(".ql-editor");
-//          const observer = new MutationObserver(() => {
-//             const text = editorContent.innerText.trim();
-//             setTextContent(text);
-//             localStorage.setItem("textContent", JSON.stringify(text));
-//          });
+         observerRef.current.observe(editorContent, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+         });
 
-//          observer.observe(editorContent, {
-//             childList: true,
-//             subtree: true,
-//             characterData: true,
-//          });
-//       }
-//    };
+         // Handle focus and blur events
+         editorContent.addEventListener("focusin", () => setIsFocused(true));
+         editorContent.addEventListener("focusout", () => setIsFocused(false));
+      }
 
-//    useLayoutEffect(() => {
-//       initializeQuill();
-//       return () => {
-//          if (quillRef.current) {
-//             quillRef.current.off("text-change");
-//             isInitialized.current = false;
-//          }
-//       };
-//    }, [isExpanded]);
+      return () => {
+         if (quillRef.current || isInitialized.current) {
+            quillRef.current.off("text-change");
+            isInitialized.current = false;
+         }
 
-//    return (
-//       <div className="text-input-container">
-//          {!isExpanded ? (
-//             <div className="text-input-bar glass" onClick={handleExpand}>
-//                <p>Start typing...</p>
-//             </div>
-//          ) : (
-//             <div className="expanded-editor glass">
-//                <div id="editor"></div>
-//                <button className="close-btn" onClick={handleCollapse}>
-//                   Close
-//                </button>
-//             </div>
-//          )}
-//       </div>
-//    );
-// }
+         if (observerRef.current) {
+            observerRef.current.disconnect();
+         }
+      };
+   }, [toolbarOptions, textContent]);
+
+   return (
+      <div
+         className={`editor-container ${
+            isFocused ? "focused-editor-container" : ""
+         }`}
+      >
+         <div id="editor" className={isFocused ? "focused-editor" : ""}></div>
+      </div>
+   );
+}
