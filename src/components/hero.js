@@ -1,4 +1,4 @@
-
+import DemoImg from "../assets/Screenshot 2025-01-19 at 11.50.37.png"
 
 export default function Hero({ isSignInOpen, toggleIsSignInOpen }) {
    return (
@@ -24,7 +24,9 @@ export default function Hero({ isSignInOpen, toggleIsSignInOpen }) {
             </div>
          </div>
 
-      
+         <div className="demo">
+            <img src={DemoImg} alt="demo" />
+         </div>
       </>
    );
 }
