@@ -20,6 +20,8 @@ def generate():
         reflecting my emotions in a way that's easy to relate to.
 
         On a new line, write "hex code:" followed directly by the hex code of a color that corresponds to my feeling.
+
+        On another new line, write "one word:" followed directly by one word describing everything I've told you.
     '''
     # Interact with the LLM model
     response: ChatResponse = chat(model="llama3.2", messages=[
@@ -36,15 +38,18 @@ def generate():
     llm_response = response.message.content
     try:
         sentiment, hex_code = llm_response.split("hex code:")
-
+        hex_code, one_word = hex_code.split("one word:")
+        print(f"Sentiment: {sentiment}, Hex: {hex_code}, Title: {one_word}")
     except ValueError:
         # If the response format is unexpected
         sentiment = "Unknown"
         hex_code = "#000000"
+        one_word = "Thoughts"
 
     return jsonify({
-        "sentiment": sentiment,
-        "hex_code": hex_code
+        "sentiment": sentiment.strip(),
+        "hex_code": hex_code.strip(),
+        "one_word": one_word.strip()
     }), 200
   
 
