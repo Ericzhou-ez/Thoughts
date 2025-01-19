@@ -34,10 +34,8 @@ def generate():
     ])
     
     llm_response = response.message.content
-     try:
-        sentiment, hex_code = llm_response.split("; ")
-        sentiment = sentiment.replace("Summary: ", "").strip()
-        hex_code = hex_code.replace("Hex: ", "").strip()
+    try:
+        sentiment, hex_code = llm_response.split("hex code:")
 
     except ValueError:
         # If the response format is unexpected

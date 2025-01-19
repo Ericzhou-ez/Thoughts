@@ -53,7 +53,10 @@
     <textarea id="userInput" placeholder="Enter your message here..."></textarea>
     <br>
     <button onclick="sendMessage()">Submit</button>
-    <div id="response" class="response" style="display: none;"></div>
+    <div class="response" id="response" style="display:none;">
+        <p><strong>Sentiment:</strong> <span id="sentiment"></span></p>
+        <p><strong>Hex Code:</strong> <span id="hexCode"></span></p>
+    </div>
   </div>
 
   <script>
@@ -76,7 +79,9 @@
 
         const data = await response.json();
         responseDiv.style.display = "block";
-        responseDiv.textContent = `Response: ${data.llm_response}`;
+        document.getElementById("sentiment").innerText = data.sentiment;
+        document.getElementById("hexCode").innerText = data.hex_code;
+        
       } catch (error) {
         responseDiv.style.display = "block";
         responseDiv.textContent = `Error: ${error.message}`;
