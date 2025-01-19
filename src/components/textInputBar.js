@@ -75,7 +75,7 @@ export default function TextInput() {
      
             const data = await response.json();
 
-            console.log(data, data.sentiment, data.hex_code);
+            console.log(data, data.sentiment, data.hex_code, data.one_word);
 
             const docRef = await addDoc(
                collection(firestore, "journalEntries"),
@@ -84,7 +84,8 @@ export default function TextInput() {
                   plainText, // Optional: Save plain text for quick previews/search
                   timestamp: new Date().toISOString(), // Include timestamp
                   sentiment: data.sentiment,
-                  hexcode: data.hex_code
+                  oneword: data.one_word,
+                  hexcode: data.hex_code,
                }
             );
             console.log("Document written with ID:", docRef.id);

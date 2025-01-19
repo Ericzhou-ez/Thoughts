@@ -77,7 +77,7 @@ export default function JournalHistory() {
                   id={entry.id}
                   hexcode={entry.hexcode}
                   deleteBtn={true}
-                  title={entry.title || "Thoughts"}
+                  title={entry.oneword || "Thoughts"}
                   date={formatDate(entry.timestamp)}
                   photoSrc={
                      entry.content?.includes('"image"')
