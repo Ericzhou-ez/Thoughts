@@ -323,7 +323,7 @@ button:active {
   background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
-.  -button {
+.delete-button {
    position: absolute;
    top: 30px;
    right: 35px;
