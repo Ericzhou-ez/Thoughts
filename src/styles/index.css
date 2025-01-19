@@ -72,6 +72,7 @@ button:active {
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-bottom: 80px;
    }
 
    .cta-btn-1 {
@@ -345,4 +346,27 @@ button:active {
 
 .delete-button:hover {
    background: #ffffff;
+}
+
+.demo {
+   background-color: black;
+   padding-left: 30px;
+   padding-right: 30px;
+   padding-top: 80px;
+   width: 80%;
+   max-width: 1200px;
+   margin: 0 auto;
+   border-top-left-radius: 40px;
+   border-top-right-radius: 40px;
+   display: flex;
+   place-content: center;
+}
+
+.demo img {
+   border-top-left-radius: 40px;
+   border-top-right-radius: 40px;
+   object-fit: contain;
+   width: 80%;
+   max-width: 1000px;
+   height: auto;
 }
