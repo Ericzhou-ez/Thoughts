@@ -1,12 +1,14 @@
-import './styles/index.css';
+import "./styles/index.css";
 import "./styles/App.css";
-import Hero from './components/hero';
-import Nav from './components/nav';
-import { useState, useEffect } from 'react';
-import { AuthenticationPopUp } from './components/authentication';
+import Hero from "./components/hero";
+import Nav from "./components/nav";
+import { useState, useEffect } from "react";
+import { AuthenticationPopUp } from "./components/authentication";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
-import { auth } from './config/firebase';
+import { auth } from "./config/firebase";
+import TextInputBar from "./components/textInputBar";
+import JournalHistory from "./components/JournalHistory";
 
 function App() {
    const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -24,20 +26,22 @@ function App() {
    };
 
    useEffect(() => {
-      const auth = getAuth(); 
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
          if (currentUser) {
             const { displayName, photoURL } = currentUser;
             setUser({
                name: displayName || "Anonymous",
-               photo: photoURL || "https://via.placeholder.com/150", 
+               photo: photoURL || "https://via.placeholder.com/150",
             });
             setSignedIn(true);
+
+            // Automatically close the popup upon successful login
+            setIsSignInOpen(false);
          } else {
             setUser(null);
             setSignedIn(false);
          }
-         setIsLoading(false); // Authentication state resolved
+         setIsLoading(false); // Stop loading spinner
       });
 
       return () => unsubscribe();
@@ -49,7 +53,7 @@ function App() {
 
    if (isLoading) {
       return (
-         <div className='loading-spinner'>
+         <div className="loading-spinner">
             <img src="/logo.svg" alt="Loading..." />
          </div>
       );
@@ -67,18 +71,20 @@ function App() {
             setUser={setUser}
          />
 
-         {!signedIn && (
+         {!signedIn ? (
             <Hero
                isSignInOpen={isSignInOpen}
                toggleIsSignInOpen={toggleIsSignInOpen}
             />
+         ) : (
+            <div className="main-app">
+               <JournalHistory />
+               {/* <TextInputBar /> */}
+            </div>
          )}
 
-         {isSignInOpen && (
-            <div
-               className={`modalOverlay-light ${signedIn ? "hidden" : ""}`}
-               onClick={toggleIsSignInOpen}
-            >
+         {isSignInOpen && !signedIn && (
+            <div className="modalOverlay-light" onClick={toggleIsSignInOpen}>
                <AuthenticationPopUp />
             </div>
          )}
