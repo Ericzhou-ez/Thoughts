@@ -11,6 +11,7 @@ export default function TextInput() {
    const quillRef = useRef(null);
    const observerRef = useRef(null);
    const [isFocused, setIsFocused] = useState(false);
+   const [llamaData, setLlamaData] = useState([]);
    const isInitialized = useRef(false);
    const { refreshEntries } = useJournal(); 
 
@@ -58,13 +59,36 @@ export default function TextInput() {
          const plainText = quill.getText().trim(); 
 
          try {
-            await addDoc(collection(firestore, "journalEntries"), {
-               content: jsonDelta,
-               plainText, 
-               timestamp: new Date().toISOString(), 
-            });
+            const response = await fetch("http://127.0.0.1:5000/generate", {
+               method: "POST",
+               headers: {
+                 "Content-Type": "application/json"
+               },
+               body: JSON.stringify({ message: plainText })
+             });
+     
+            if (!response.ok) {
+               throw new Error(`HTTP error! status: ${response.status}`);
+            }
+     
+            const data = await response.json();
 
-            await refreshEntries();
+            console.log(data, data.sentiment, data.hex_code);
+
+            const docRef = await addDoc(
+               collection(firestore, "journalEntries"),
+               {
+                  content: jsonDelta,
+                  plainText, // Optional: Save plain text for quick previews/search
+                  timestamp: new Date().toISOString(), // Include timestamp
+                  sentiment: data.sentiment,
+                  hexcode: data.hex_code
+               }
+            );
+            console.log("Document written with ID:", docRef.id);
+
+            refreshEntries(); // Notify other components to refresh entries
+
          } catch (error) {
             console.error("Error saving content:", error);
          }
