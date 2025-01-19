@@ -1,3 +1,4 @@
+
 :root {
    --background: #eeeeee;
    --background-secondary: #f4f4f4;
@@ -8,6 +9,45 @@
    --light-gray-accent: #f1f1f1;
    --dark-gray-accent: #535353;
    --darker-gray-accent: #535353;
+}
+
+.journal {
+   width: 80%;
+   max-width: 1000px;
+   margin: 0 auto;
+   padding-top: 20vh;
+}
+
+#title-editor {
+   padding: 10px 16px;
+   color: var(--font-secondary);
+   font-size: 2.5rem;
+   font-weight: bolder;
+   letter-spacing: 0.04rem;
+   border: none;
+}
+
+.ql-editor h1 {
+   font-size: 2.5rem;
+   color: var(--font-primary);
+   padding-top: 25px;
+   padding-bottom: 10px;
+   padding-left: 16px;
+}
+
+.ql-editor {
+   padding: 0;
+}
+
+.ql-blank {
+   padding: 0;
+   border: none;
+   border-radius: 20px;
+}
+
+
+.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
+   display: none;
 }
 
 .ql-toolbar .ql-stroke {
@@ -113,87 +153,17 @@ svg {
    margin-right: 25px !important;
 }
 
-.ql-editor h1 {
-   font-size: 2.5rem;
-   color: var(--font-primary);
-   padding-top: 25px;
-   padding-bottom: 10px;
-   padding-left: 16px;
-}
-
-.ql-editor {
-   padding: 0;
-}
-
-.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
-   display: none;
-}
-
-.editor-container.focused-editor-container {
-   width: 80vw !important;
-   height: 70vh !important;
-}
-
-#editor.focused-editor {
-   width: 70vw !important;
-   height: 70vh !important;
-   position: relative;
-   transform: translateY(-65vh);
-}
-
-.editor-container {
-   position: fixed;
-   bottom: 3vh;
-   width: 60vw;
-   max-width: 1000px;
-   border-radius: 30px;
-   padding: 10px 20px;
-   left: 50%; /* Start at the center horizontally */
-   transform: translateX(-50%);
-   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-
-   background: rgba(208, 208, 208, 0.2);
-   backdrop-filter: blur(20px);
-   z-index: 200;
-   transition: all 0.4s ease-in-out;
-}
-
-#editor {
-   border: none;
+#content-editor {
    padding: 10px 16px;
+   border: none;
    font-size: 1.2rem;
-   color: var(--font-primary);
-   font-family: "Oxygen", Helvetica, Arial;
-   line-height: 2rem !important;
-   max-width: 980px;
-
-   /* overflow-y: scroll; */
-
-   transition: all 0.2s ease-in-out;
+   line-height: 2.5rem;
+   margin-bottom: 20px;
 }
 
-#editor img {
+#content-editor img{
    width: 50%;
    height: auto;
-   text-align: center;
+   border-radius: 20px;
    margin: 0 auto;
-   border-radius: 25px;
-
-}
-
-.send-button {
-   background-color: #000004;
-   color: white;
-   border: none;
-   border-radius: 50%;
-   font-size: 1.2rem;
-   font-style: bold;
-   padding: 5px !important;
-
-   height: 40px;
-   width: 40px;
-
-   position: fixed;
-   bottom: 1.5vh;
-   right: 1vw;
 }

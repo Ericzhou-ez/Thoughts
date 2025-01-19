@@ -236,6 +236,7 @@ button:active {
 .journal-cover {
    flex: 0 0 auto; /* Prevent flex shrinking and allow scrolling */
    display: flex;
+   position: relative;
    flex-direction: column;
    height: 450px; /* Set consistent height */
    width: 400px; /* Set consistent width */
@@ -325,8 +326,8 @@ button:active {
 
 .delete-button {
    position: absolute;
-   top: 30px;
-   right: 35px;
+   top: 18px;
+   right: 20px;
    background: #e7e7e7;
    color: #272323;
    border: none;

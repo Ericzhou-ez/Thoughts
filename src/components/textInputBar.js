@@ -2,18 +2,17 @@ import React, { useState, useLayoutEffect, useRef } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import "../styles/textBar.css";
 import { storage, firestore } from "../config/firebase";
-import { useJournal } from "../context/journalContext"; // Import the useJournal hook
+import { useJournal } from "../context/journalContext";
 
 export default function TextInput() {
    const quillRef = useRef(null);
    const observerRef = useRef(null);
    const [isFocused, setIsFocused] = useState(false);
    const isInitialized = useRef(false);
-
-   const { refreshEntries } = useJournal(); // Use the refreshEntries function from the context
+   const { refreshEntries } = useJournal(); 
 
    const imageHandler = () => {
       const input = document.createElement("input");
@@ -44,7 +43,6 @@ export default function TextInput() {
                   const quill = quillRef.current;
                   const range = quill.getSelection();
 
-                  // Insert the image URL into the Quill editor
                   quill.insertEmbed(range.index, "image", downloadURL);
                }
             );
@@ -55,22 +53,18 @@ export default function TextInput() {
    const saveContent = async () => {
       const quill = quillRef.current;
       if (quill) {
-         const delta = quill.getContents(); // Get full Delta, including text and images
+         const delta = quill.getContents(); 
          const jsonDelta = JSON.stringify(delta);
-         const plainText = quill.getText().trim(); // Extract plain text if needed
+         const plainText = quill.getText().trim(); 
 
          try {
-            const docRef = await addDoc(
-               collection(firestore, "journalEntries"),
-               {
-                  content: jsonDelta,
-                  plainText, // Optional: Save plain text for quick previews/search
-                  timestamp: new Date().toISOString(), // Include timestamp
-               }
-            );
-            console.log("Document written with ID:", docRef.id);
+            await addDoc(collection(firestore, "journalEntries"), {
+               content: jsonDelta,
+               plainText, 
+               timestamp: new Date().toISOString(), 
+            });
 
-            refreshEntries(); // Notify other components to refresh entries
+            await refreshEntries();
          } catch (error) {
             console.error("Error saving content:", error);
          }
@@ -82,7 +76,7 @@ export default function TextInput() {
          ["bold", "italic", "underline"],
          [{ header: 2 }, { header: 3 }],
          [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-         ["image"], // Add image button to the toolbar
+         ["image"], 
       ],
       []
    );
@@ -104,7 +98,7 @@ export default function TextInput() {
                toolbar: {
                   container: toolbarOptions,
                   handlers: {
-                     image: imageHandler, // Attach custom image handler
+                     image: imageHandler, 
                   },
                },
             },
