@@ -16,6 +16,9 @@
    fill: none;
    stroke: var(--font-secondary);
 }
+.ql-hidden {
+   display: none !important;
+}
 
 .ql-toolbar .ql-fill {
    fill: var(--font-secondary);
@@ -136,6 +139,8 @@ svg {
 #editor.focused-editor {
    width: 70vw !important;
    height: 60vh !important;
+   position: relative;
+   transform: translateY(-65vh);
 }
 
 .editor-container {
@@ -152,7 +157,7 @@ svg {
    background: rgba(208, 208, 208, 0.2);
    backdrop-filter: blur(20px);
 
-   transition: all 0.2s ease-in-out;
+   transition: all 0.4s ease-in-out;
 }
 
 #editor {
