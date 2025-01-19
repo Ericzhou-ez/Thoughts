@@ -5,12 +5,15 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import "../styles/textBar.css";
 import { storage, firestore } from "../config/firebase";
+import { useJournal } from "../context/journalContext"; // Import the useJournal hook
 
 export default function TextInput() {
    const quillRef = useRef(null);
    const observerRef = useRef(null);
    const [isFocused, setIsFocused] = useState(false);
    const isInitialized = useRef(false);
+
+   const { refreshEntries } = useJournal(); // Use the refreshEntries function from the context
 
    const imageHandler = () => {
       const input = document.createElement("input");
@@ -57,16 +60,17 @@ export default function TextInput() {
          const plainText = quill.getText().trim(); // Extract plain text if needed
 
          try {
-            // Save to Firestore
             const docRef = await addDoc(
                collection(firestore, "journalEntries"),
                {
-                  content: jsonDelta, // Save full Quill Delta
+                  content: jsonDelta,
                   plainText, // Optional: Save plain text for quick previews/search
                   timestamp: new Date().toISOString(), // Include timestamp
                }
             );
             console.log("Document written with ID:", docRef.id);
+
+            refreshEntries(); // Notify other components to refresh entries
          } catch (error) {
             console.error("Error saving content:", error);
          }

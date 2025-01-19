@@ -156,7 +156,7 @@ svg {
 
    background: rgba(208, 208, 208, 0.2);
    backdrop-filter: blur(20px);
-
+   z-index: 200;
    transition: all 0.4s ease-in-out;
 }
 
@@ -167,6 +167,7 @@ svg {
    color: var(--font-primary);
    font-family: "Oxygen", Helvetica, Arial;
    line-height: 2rem !important;
+   max-width: 980px;
 
    /* overflow-y: scroll; */
 

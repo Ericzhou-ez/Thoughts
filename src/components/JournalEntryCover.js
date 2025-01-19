@@ -1,20 +1,14 @@
+import React from "react";
 
-
-export default function JournalEntryCover({ title, date, photoSrc, handleQuickStart }) {
-   console.log("Title: ", title);
-   console.log("Date: ", date);
-   console.log("Photo Source: ", photoSrc);
-
+export default function JournalEntryCover({ title, date, photoSrc, onDelete, deleteBtn }) {
    return (
       <div className="journal-cover">
-         <img
-            src={photoSrc}
-            alt="journal-cover-image"
-            style={{
-               width: "100%",
-               height: "auto",
-            }}
-         />
+         {deleteBtn && (
+            <button className="delete-button" onClick={onDelete}>
+               ×
+            </button>
+         )}
+         <img src={photoSrc} alt={title} />
          <div className="journal-description">
             <h3>{title}</h3>
             <p>{date}</p>

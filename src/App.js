@@ -16,6 +16,7 @@ import {
    Route,
    useNavigate,
 } from "react-router-dom";
+import { JournalProvider } from "./context/journalContext";
 
 function App() {
    const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -88,14 +89,14 @@ function App() {
                         toggleIsSignInOpen={toggleIsSignInOpen}
                      />
                   ) : (
-                     <>
+                     <JournalProvider>
                         <div className="main-top-app">
                            <JournalHistory
                         
                            />
                         </div>
                         <TextInputBar />
-                     </>
+                     </JournalProvider>
                   )
                }
             />
